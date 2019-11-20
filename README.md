@@ -25,3 +25,37 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+
+* ng-content help to get the content between the tags.
+* 
+
+Decorators
+----------
+
+* Input
+* Output
+* ViewChild -- Local references to get value of any element.
+  * @ViewChild('serverContentInput') serverContentInput: ElementRef;
+* ContentChild('contantParagraph') paragraph: ElementRef;
+
+
+
+EventEmitter
+------------
+
+* EventEmitter
+
+Lifecycle of angular
+--------------------
+
+1. ngOnChange - executed multiple time.
+2. ngOnInt - Called once the component is initialized.
+3. ngDoCheck - Called during every change detection run.
+4. ngAfterContentInit - Called after content (ng-content) has been projected into view.
+5. ngAfterContentChecked - Called every time the projected content has been checked.
+6. ngAfterViewInit called after the component's view (and child views) has been initialized.
+7. ngAfterViewChecked called everytime the view (and child views) hasve been checked.
+8. ngOnDestroy called once the component is about to be destroyed.
+
