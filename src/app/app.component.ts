@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'recipe-book';
-  selectedFeature: string;
+  selectedFeature: string='recipe';
 
   onNavigate(selectedFeature: string){
     this.selectedFeature = selectedFeature;
