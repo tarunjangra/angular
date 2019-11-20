@@ -58,4 +58,3 @@ Lifecycle of angular
 6. ngAfterViewInit called after the component's view (and child views) has been initialized.
 7. ngAfterViewChecked called everytime the view (and child views) hasve been checked.
 8. ngOnDestroy called once the component is about to be destroyed.
-
