@@ -58,3 +58,12 @@ Lifecycle of angular
 6. ngAfterViewInit called after the component's view (and child views) has been initialized.
 7. ngAfterViewChecked called everytime the view (and child views) hasve been checked.
 8. ngOnDestroy called once the component is about to be destroyed.
+
+
+
+Attributes vs Structural Directives
+-----------------------------------
+
+* AD look like a normal HTML attribute where as SD have a leading *
+* AD only affect/change the element they are added to where as SD affect whole area in the DOM (elements get added/removed)
+
