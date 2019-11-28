@@ -66,7 +66,6 @@ Attributes vs Structural Directives
 
 * AD look like a normal HTML attribute where as SD have a leading *
 * AD only affect/change the element they are added to where as SD affect whole area in the DOM (elements get added/removed)
-
-
-
 * We can not have more than one structural element on the same element.
+* In directive declaration, selector property in the Directive decorator should have the name of the selector element.
+
