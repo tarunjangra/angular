@@ -10,7 +10,7 @@ export class RecipeItemComponent implements OnInit {
 
   @Input() recipe: Recipe;
   @Input() index: number;
-  @Output() selectedRecipe: EventEmitter = new EventEmitter<void>();
+  @Output() selectedRecipe: EventEmitter<void> = new EventEmitter();
 
   constructor() { }
 
