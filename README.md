@@ -140,3 +140,12 @@ export class UnlessDirective {
 }  
 
 ```
+
+```html
+<div [ngSwitch]="value">
+ <p *ngSwitchCase="5">Value is 5</p>
+ <p *ngSwitchCase="15">Value is 15</p>
+ <pm *ngSwitchDefault>Value is default Value</p>
+</div>
+```
+
