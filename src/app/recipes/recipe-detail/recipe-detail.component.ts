@@ -1,5 +1,7 @@
 import { Component, OnInit,Input } from '@angular/core';
 import {Recipe} from '../recipe.model';
+import {ShoppingListService} from '../../shopping-list/shopping-list.service';
+import {Ingredient} from '../../shared/ingredient.model';
 
 @Component({
   selector: 'rb-recipe-detail',
@@ -9,9 +11,16 @@ import {Recipe} from '../recipe.model';
 export class RecipeDetailComponent implements OnInit {
 
   @Input() recipe: Recipe;
-  constructor() { }
+  constructor(private sls: ShoppingListService) { }
 
   ngOnInit() {
+  }
+
+  onAddToShoppingList(recipe: Recipe){
+    recipe.ingredients.forEach(
+        (ingre: Ingredient) => {
+          this.sls.addIngredient(ingre);
+    })
   }
 
 }
