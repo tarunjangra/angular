@@ -116,3 +116,27 @@ You can bind specific property too
 
 ```
 
+* Structural Directive having leading * use ng-template behind the scene.
+
+How to build structural directive
+---------------------------------
+
+```javascript
+
+@Directive({
+  'selector' : '[unless]'
+})
+
+export class UnlessDirective {
+
+  @Input() set unless(condition: boolean){
+    if(!condition){
+      this.vcRef.createEmbeddedView(this.templateRef)
+    } else {
+      this.vcRef.clear();
+    }
+  }
+  constructor(private templateRef: TemplateRef<any>, private vcRef: ViewContainerRef){} 
+}  
+
+```
