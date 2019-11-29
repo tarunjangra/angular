@@ -11,7 +11,7 @@ export class RecipeListComponent implements OnInit {
       new Recipe('A Test Recipe','This is test','https://realhousemoms.com/wp-content/uploads/One-Pot-Alfredo-Pasta-Easy-Dinner-Recipe-HERO-600x900.jpg'),
       new Recipe('A Test Recipe','This is test','https://realhousemoms.com/wp-content/uploads/One-Pot-Alfredo-Pasta-Easy-Dinner-Recipe-HERO-600x900.jpg')
   ];
-  @Output() selectedRecipe: EventEmitter = new EventEmitter<Recipe>();
+  @Output() selectedRecipe: EventEmitter<Recipe> = new EventEmitter();
 
   constructor() { }
 
