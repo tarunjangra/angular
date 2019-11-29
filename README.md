@@ -69,3 +69,50 @@ Attributes vs Structural Directives
 * We can not have more than one structural element on the same element.
 * In directive declaration, selector property in the Directive decorator should have the name of the selector element.
 
+ElementRef
+----------
+
+
+* Use ElementRef if you want to use any specific element from html.
+* it is not good practice though. Because it access element directly from DOM.
+
+Renderer2
+---------
+
+```javascript
+this.renderer.setStyle(this.elRef.nativeElement, 'background-color','blue')
+```
+
+* It is better approach to access the DOM. In service workers, you won't have access of the DOM.
+
+
+@HostListener Decorator
+-----------------------
+
+HostListener allow you to listen events like mouseover etc. You can use that like following.
+
+```javascript
+@HostListener('mouseenter') mouneover(eventData: Event) {
+// Here you will get all data reletated to the element on which it get executed.
+}
+
+@HostListener('mouseleave') mouseleve(eventData: Event) {
+ // your code.
+}
+```
+
+
+@HostBinding Decorator
+----------------------
+
+You can bind specific property too
+
+```javascript
+@HostBinding('style.backgroundColor') backgroundColor: string = 'transparent';
+
+@HostListener('mouseenter') mouseover(eventData: Event){
+  this.backgroundColor = 'blue'
+}
+
+```
+
