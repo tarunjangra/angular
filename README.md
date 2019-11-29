@@ -149,3 +149,10 @@ export class UnlessDirective {
 </div>
 ```
 
+Services & Dependencies Injections
+----------------------------------
+
+* Services are available from upper level to lower level. So you should define service provider on top component.
+* you can inject services in components.
+* you can also inejct services in services. You can to use @Injectable decorator in the service class. It need to define at the receiving end.
+* You should use services when you need to communicate from one to other component.
