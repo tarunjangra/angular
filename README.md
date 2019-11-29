@@ -156,3 +156,105 @@ Services & Dependencies Injections
 * you can inject services in components.
 * you can also inejct services in services. You can to use @Injectable decorator in the service class. It need to define at the receiving end.
 * You should use services when you need to communicate from one to other component.
+
+
+RouterLinkActive & RouterLinkActiveOptions
+------------------------------------------
+
+* RouterLinkActive directive used to mark your active link with the corresponding classname.
+* RouterLinkActiveOptions define the exact path. Usage like below
+    ```html
+    < a RouterLink="" RouterLinkActive="active" [RouterLinkActiveOptions]="{exact: true}">some linke</a>
+    ```
+
+How to redirect to particular router through programming
+--------------------------------------------------------
+
+```javascript
+import {Router} from '@angular/router';
+
+export class someComponent implements OnInit {
+  constructor(provaite router: Router){}
+  
+  onClickSomeServer(){
+    this.router.navigate(['/some-route']);
+  }
+}
+```
+
+or make it relative to current route
+
+
+```javascript
+import {Router, ActivatedRoute} from '@angular/router';
+
+export class someComponent implements OnInit {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ){}
+  
+  onClickSomeServer(){
+    this.router.navigate(['some-route'], {relativeTo: this.route});
+  }
+}
+```
+
+How to get parameters from the URL in dynamic routes
+----------------------------------------------------
+Assume our route is like following
+
+```javascript
+  route = [
+    {path: "user/:id/:name", component: "UserComponent"}
+  ];
+```
+
+```javascript
+import {ActivatedRoute} from '@angular/router';
+
+export class someComponent implements OnInit {
+  constructor(
+    private route: ActivatedRoute
+  ){}
+  
+  onClickSomeServer(){
+    return {
+      id: this.route.snapshot.params['id'],
+      name: this.route.snapshot.params['name']
+    }
+  }
+}
+```
+
+
+When you don't know when you will have data, how long it will take to be available at that time use observables to get that.
+
+```javascript
+import {ActivatedRoute, Params} from '@angular/router';
+
+export class someComponent implements OnInit {
+  user: {id: number, name: string};
+  constructor(
+    private route: ActivatedRoute
+  ){}
+  
+  
+  
+  OnInit(){
+  this.user = {
+      id: this.route.snapshot.params['id'],
+      name: this.route.snapshot.params['name']
+    }
+  }
+  
+  // with observable. Where params is observable.
+  this.route.params
+      .subscribe((params: Params)=>{
+        this.user.id = params['id'];
+        this.user.name = params['name']
+      });
+  
+}
+```
+
