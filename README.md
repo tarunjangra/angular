@@ -418,6 +418,10 @@ How to implement alert when you go away from the specific route.
 ```
 
 
+* In angular app when you deploy you app to real server. It will always try to find the defined route on the server. And that case, you app can be failed with 404. Solution to this problem is, Just make sure all 404 pages on the server return back index.html page.
+
+
+
 
 
 
