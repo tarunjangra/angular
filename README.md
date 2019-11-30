@@ -258,3 +258,141 @@ export class someComponent implements OnInit {
 }
 ```
 
+Although angular always cleanup when you leave the component. Like it will always unsubscribe above observable when you leave the component. 
+
+How you can clean up your debts here
+====================================
+
+```javascript
+import {OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute, Params} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription'
+
+export class someComponent implements OnInit, OnDestroy {
+  user: {id: number, name: string};
+  paramSubscription: Subscription;
+  constructor(
+    private route: ActivatedRoute
+  ){}
+  
+  
+  
+  ngOnInit(){
+  this.user = {
+      id: this.route.snapshot.params['id'],
+      name: this.route.snapshot.params['name']
+    }
+  }
+  
+  // with observable. Where params is observable.
+  this.paramSubscription = this.route.params
+      .subscribe((params: Params)=>{
+        this.user.id = params['id'];
+        this.user.name = params['name']
+      });
+  
+
+  ngOnDestroy(){
+    this.paramSubscription.unsubscribe();
+  }
+}
+
+
+```
+
+* routerLink direcitve has queryParams bindable property this could manage rest of the query params.
+* you can also add fragment (params after # in the URL) property of the routerLink directive.
+* under route object we have queryParams and fragment as observable to be subscribed.
+* If you are passing numeric value the url or query params. they have be casted to number. by default they are string of number like '1'. You can do that by simpley putting leading "+" to the variable.
+* queryParamsHandling = 'preserve' allow you to keep your queryparams in the next child route. which will be used in the second parameter of route in your component.
+* handling 404 in router implementation. You can have wild card route "**" to catch all routes and use "redirectTo" property of route and define where you want to be direcirected.
+* always have "**" route at the end of the routing definition.
+* you can use pathMatch: 'full' in route property of your route definition to make sure it always mataches correct route.
+
+
+Gaurding your routes
+--------------------
+
+A functionality which executed before the route load or you just about to leave the route. You can use "CanActivate" or "CanActivateChild" gaurd interface provided by '@angular/router' to do this.
+
+##### Implementation
+
+```javascript
+// auth-gaurd.service.ts
+import {
+  CanActivate, 
+  ActivatedRouteSnapshot, 
+  RouterStateSnapshot
+  } from '@angular/router';
+import {Observable, Promise} from 'rxjs/Observable'
+import {Injectable} from '@angular/core';
+
+@Injectable()
+export class AughGaurd implements CanActivate, CanActivateChild {
+
+   // sometime it execute synchronously and some time asynchronously. 
+   // which will excute everything on client and no need of server 
+   // implementation
+    CanActivate(
+               route: ActivatedRouteSnapshot,
+               state: RouterStateSnapshot
+                ): Observable<boolean> | Promise<boolean> | boolean {
+       
+       return this.authService.isAuthorized()
+             .then((authenticated: boolean)=>{
+               if(authenticated) {
+                 return true;
+               }else{
+                 this.router.navigate(['/']);
+               }
+             });
+      
+      // That will help you to control on all childs to guard routes.      
+      CanActivateChild(
+              route: ActivatedRouteSnapshot,
+              state: RouterStateSnapshot
+              ): Observable<boolean> | Promise<boolean> | boolean {
+            return this.CanActivate(route, state);
+      }
+      
+    }
+    
+    constructor (
+      private authService: AuthService
+      private router: Router
+    ){}
+    
+}
+
+//auth.service.ts
+
+export class AuthService {
+  loggedIn: boolean = false;
+  
+  isAuthorized(){
+  
+    // simulating server behaviour where it is taking 8 seconds
+    // to verify if it is correcect logged in state.
+    return new Promise((resolve, reject)=>{
+      setTimeout((
+        resolve(this.loggedIn)
+      )=>{},800);
+    });
+  }
+  
+  login(){
+    this.loggedIn = true;
+  }
+  
+  logout(){
+    this.loggedIn = false;
+  }
+}
+```
+
+
+
+
+
+
+
