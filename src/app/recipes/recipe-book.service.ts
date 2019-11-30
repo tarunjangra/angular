@@ -40,8 +40,8 @@ export class RecipeBookService {
     this.recipes.push(recipe);
   }
 
-  getRecipe(indx: number) {
-    return this.recipes[indx];
+  getRecipe(index: number) {
+    return this.recipes.slice()[index];
   }
 
 
