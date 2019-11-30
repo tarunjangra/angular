@@ -8,8 +8,9 @@
 <hr>
 <div class="row">
   <div class="col-xs-12">
-  <rb-recipe-item *ngFor="let recipeEl of recipes"
+  <rb-recipe-item *ngFor="let recipeEl of recipes; let i = index"
   [recipe]="recipeEl"
+  [index]="i"
   ></rb-recipe-item>
   </div>
 </div>

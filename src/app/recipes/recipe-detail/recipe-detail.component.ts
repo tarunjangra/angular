@@ -30,7 +30,7 @@ export class RecipeDetailComponent implements OnInit {
         .subscribe(
             (params: Params)=>{
               this.id = +params['id'];
-              this.recipe = this.rs.getRecipe(id);
+              this.recipe = this.rs.getRecipe(this.id);
         });
   }
 
