@@ -347,7 +347,7 @@ export class AughGaurd implements CanActivate, CanActivateChild {
                }
              });
       
-      // That will help you to control on all childs to guard routes.      
+      // That will help you to guard on all child routes.      
       CanActivateChild(
               route: ActivatedRouteSnapshot,
               state: RouterStateSnapshot
@@ -390,7 +390,32 @@ export class AuthService {
 }
 ```
 
+How to implement alert when you go away from the specific route.
 
+```javascript
+
+  // create one more searvice name can-deactivate-gaurd.service.ts
+  
+  import {Observable} from 'rxjs/Observable';
+  
+  import {CanDeactivate, ActivateRouterSnapshot, RouterStateSnapshot} from '@angular/router';
+  
+  export interface CanComponentDeactivate {
+    canDeactivate : () => Observable<boolean> | Promise<boolean> | boolean;
+  }
+  
+  export class CanDeactivateGaurd implements CanDeactivate<CanComponentDeactive> {
+    canDeactivate(
+        component: CanComponentDeactivate,
+        currentRoute: ActivatedRouteSnapshot,
+        currentState: RouterStateSnapshot,
+        nextState?: RouterStateSnapshot
+    ): Observable<boolean> | Promise<boolean> | boolean; {
+        return component.canDeactivate()
+    }
+  }
+
+```
 
 
 
