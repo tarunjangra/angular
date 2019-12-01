@@ -419,6 +419,8 @@ How to implement alert when you go away from the specific route.
 
 
 * In angular app when you deploy you app to real server. It will always try to find the defined route on the server. And that case, you app can be failed with 404. Solution to this problem is, Just make sure all 404 pages on the server return back index.html page.
+* It is recommended to use **subjects** instead of **eventEmitter** when you are communicating across components through services. Although when you use @Output() decorator, you should use angular eventEmitter. 
+* When you use **subjects**, make sure you are **unsubscribing** them manually in ngOnDestroy hook.
 
 
 
