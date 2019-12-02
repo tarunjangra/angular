@@ -1,11 +1,8 @@
 import {Recipe} from './recipe.model';
 import {Ingredient} from '../shared/ingredient.model';
-import { Subject } from 'rxjs';
 
 export class RecipeBookService {
 
-  // recipeSelected = new EventEmitter<Recipe>();
-  recipeSelected: Subject<Recipe> = new Subject();
 
   private recipes: Recipe[] = [
     new Recipe(
