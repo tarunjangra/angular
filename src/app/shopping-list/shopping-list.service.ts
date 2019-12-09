@@ -35,5 +35,13 @@ export class ShoppingListService {
     this.ingredientsChanged.next(this.ingredients.slice());
   }
 
+  deleteIngredient(id: number = 0){
+    if(id){
+      this.ingredients.slice(id);
+    }
+    this.ingredients.pop();
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
+
 
 }

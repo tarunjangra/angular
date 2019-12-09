@@ -9,7 +9,7 @@
               id="name"
               class="form-control"
               name="name"
-              [(ngModel)]="name"
+              ngModel
               required
           >
         </div>
@@ -20,7 +20,7 @@
               id="amount"
               class="form-control"
               name="amount"
-              [(ngModel)]="amount"
+              ngModel
               required
               pattern="^[1-9]+[0-9]*$"
           >
@@ -29,10 +29,9 @@
       <div class="row">
         <div class="col-xs-12">
           <button type="submit" class="btn btn-success" [disabled]="!f.valid">
-            <span *ngIf="!editMode">Add</span>
-            <span *ngIf="editMode">Update</span>
+            {{editMode? 'Update':'Add'}}
           </button>
-          <button type="button" class="btn btn-danger">Delete</button>
+          <button type="button" (click)="onDelete()" class="btn btn-danger">Delete</button>
           <button type="button" (click)="onClear(f)" class="btn btn-primary">Clear</button>
         </div>
       </div>
