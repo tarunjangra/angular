@@ -23,4 +23,8 @@ export class ShoppingListComponent implements OnInit {
 
   }
 
+  editShoppingList (id: number){
+    this.shoppingService.selectedIngredient.emit(this.ingredients[id]);
+  }
+
 }

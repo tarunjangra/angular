@@ -7,7 +7,9 @@ export class ShoppingListService {
     new Ingredient('Tomotoes', 5),
   ];
 
-  ingredientsChanged = new EventEmitter<Ingredient[]>();
+
+  ingredientsChanged: EventEmitter<Ingredient[]> = new EventEmitter();
+  selectedIngredient: EventEmitter<Ingredient> = new EventEmitter();
 
   getIngredients (){
     return this.ingredients.slice();
