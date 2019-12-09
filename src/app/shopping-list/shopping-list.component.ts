@@ -24,7 +24,7 @@ export class ShoppingListComponent implements OnInit {
   }
 
   editShoppingList (id: number){
-    this.shoppingService.selectedIngredient.next(this.ingredients[id]);
+    this.shoppingService.selectedIngredientId.next(id);
   }
 
 }

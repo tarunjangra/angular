@@ -10,10 +10,19 @@ export class ShoppingListService {
 
 
   ingredientsChanged: EventEmitter<Ingredient[]> = new EventEmitter();
-  selectedIngredient: Subject<Ingredient> = new Subject();
+  selectedIngredientId: Subject<number> = new Subject();
 
-  getIngredients (){
+  getIngredients ()  {
     return this.ingredients.slice();
+  }
+
+  getIngredient(id: number){
+    return this.ingredients.slice()[id];
+  }
+
+  updateIngredient (id: number, ingredient: Ingredient){
+    this.ingredients[id] = ingredient;
+    this.ingredientsChanged.emit(this.ingredients.slice());
   }
 
   addIngredient(ingredient: Ingredient) {
