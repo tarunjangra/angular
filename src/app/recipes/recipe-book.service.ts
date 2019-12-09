@@ -8,7 +8,7 @@ export class RecipeBookService {
     new Recipe(
         'Tasty Schnitzel',
         'A super-tasty schnitzel - just awesome',
-        'https://www.crushpixel.com/static12/preview2/stock-photo-tasty-schnitzel-in-breading-with-fried-potato-onion-and-mushrooms-859791.jpg',
+        'https://i1.wp.com/food.theplainjane.com/wp-content/uploads/2015/08/chicken-schnitzel-special.jpg?w=800',
          [
              new Ingredient('Meat', 1),
              new Ingredient('French Fries', 20)
