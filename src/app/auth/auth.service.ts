@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 interface AuthResponseData {
   idToken: string;// 	A Firebase Auth ID token for the newly created user.
@@ -20,6 +22,17 @@ export class AuthService {
     const API = 'AIzaSyBMfwZ3r4sYy-fdB1dLDPM_glQN7Mgg5ig';
     return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + API, {
       email, password, returnSecureToken: true
-    });
+    }).pipe(catchError(errorRes => {
+      let errorMessage = "An unknown error occured.";
+      if(!errorRes.error || !errorRes.error.error){
+        return throwError(errorMessage);
+      }
+      switch(errorRes.error.error.message){
+        case 'EMAIL_EXISTS':
+          errorMessage = "This email exists already."
+          break;
+      }
+      return throwError(errorMessage);
+    }));
   }
 }

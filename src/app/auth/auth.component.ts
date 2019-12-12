@@ -11,6 +11,7 @@ export class AuthComponent implements OnInit {
 
   loginMode: boolean = false;
   isLoading: boolean = false;
+  error: string = null;
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
@@ -31,9 +32,9 @@ export class AuthComponent implements OnInit {
         this.isLoading = false;
         console.log(response.email);
         console.log(response.idToken);
-      },(error) => {
+      },(errorMessage) => {
         this.isLoading = false;
-        console.log(error);
+        this.error = errorMessage;
       });
     }
     form.reset();
