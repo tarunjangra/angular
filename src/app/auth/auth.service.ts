@@ -37,7 +37,8 @@ export class AuthService {
       catchError(this.handleError),
       tap((response: AuthResponseData) => {
         const expirationDate = new Date(new Date().getTime() + (+response.expiresIn * 1000) );
-        this.user.next(new User(response.email, response.localId, response.idToken, expirationDate));
+        const user: User = new User(response.email, response.localId, response.idToken, expirationDate);
+        this.user.next(user);
       })
       );
   }
