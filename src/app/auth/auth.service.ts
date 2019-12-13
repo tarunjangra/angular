@@ -26,7 +26,14 @@ export class AuthService {
     const API = 'AIzaSyBMfwZ3r4sYy-fdB1dLDPM_glQN7Mgg5ig';
     return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + API, {
       email, password, returnSecureToken: true
-    }).pipe(catchError(this.handleError));
+    }).pipe(
+      catchError(this.handleError),
+      tap((response: AuthResponseData) => {
+        const expirationDate = new Date(new Date().getTime() + (+response.expiresIn * 1000) );
+        const user: User = new User(response.email, response.localId, response.idToken, expirationDate);
+        this.user.next(user);
+      })
+      );
   }
 
   login(email: string, password: string) {
