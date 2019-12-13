@@ -5,6 +5,7 @@ import { Recipe } from '../recipes/recipe.model';
 import {map, tap, take, exhaustMap} from 'rxjs/operators';
 import { Ingredient } from './ingredient.model';
 import { AuthService } from '../auth/auth.service';
+import { User } from '../auth/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,29 +25,31 @@ export class DataStorageService {
 
   fetchRecipes(){
 
-    let token: string;
+    // let token: string;
     // take will allow me to subscribe the user only once.
     // and It would not be the on going subscription and no need
     // to unsubscribe that.
-    this.authService.user.pipe(
+    return this.authService.user.pipe(
       take(1),
-    ).subscribe(user => {
-      token = user.token;
-    });
+      exhaustMap((user: User) => {
+        return this.http.get<Recipe[]>('https://g-invoicing.firebaseio.com/recipes.json', {
+          params: new HttpParams().set('auth', user.token)
+        })
+      },
+      ),
+      map(
+        (recipes: Recipe[]) => {
+          return recipes.map(recipe => {
+            return {...recipe, ingredients: recipe.ingredients?recipe.ingredients:[]}
+          });
+        }
+      ),
+      tap(
+        (recipes: Recipe[]) => {
+          this.rs.setRecipes(recipes);
+        }
+      )
+    );
 
-    return this.http.get<Recipe[]>('https://g-invoicing.firebaseio.com/recipes.json', {
-      params: new HttpParams().set('auth', token)
-    })
-    .pipe(map(
-      recipes => {
-        return recipes.map(recipe => {
-          return {...recipe, ingredients: recipe.ingredients?recipe.ingredients:[]}
-        });
-      }
-    ), tap(
-      recipes => {
-        this.rs.setRecipes(recipes);
-      }
-    ));
   }
 }
