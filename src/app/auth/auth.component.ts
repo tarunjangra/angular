@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService, AuthResponseData } from './auth.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'rb-auth',
@@ -13,7 +14,7 @@ export class AuthComponent implements OnInit {
   loginMode: boolean = false;
   isLoading: boolean = false;
   error: string = null;
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -34,11 +35,11 @@ export class AuthComponent implements OnInit {
       this.isLoading = true;
       obs = this.authService.signup(form.value.email, form.value.password);
     }
-    obs.subscribe((response) => {
+    obs.subscribe(resData => {
+      console.log(resData);
       this.isLoading = false;
-      console.log(response.email);
-      console.log(response.idToken);
       this.error = null;
+      this.router.navigate(['/recipes']);
     },(errorMessage) => {
       this.isLoading = false;
       this.error = errorMessage;
