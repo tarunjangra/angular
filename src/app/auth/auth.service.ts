@@ -82,7 +82,9 @@ export class AuthService {
 
   autologin(){
     const userData: {email: string, id: string, _token: string, _tokenExpirationDate: string} = JSON.parse(localStorage.getItem('userData'));
-
+    if(!userData){
+      return null;
+    }
     const user: User = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
     if(!user.token){
       return null;

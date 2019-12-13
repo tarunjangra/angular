@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpParams
+  HttpInterceptor, HttpHandler, HttpRequest, HttpParams
 } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { take, exhaustMap } from 'rxjs/operators';
-import { runInNewContext } from 'vm';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {

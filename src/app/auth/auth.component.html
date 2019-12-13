@@ -1,8 +1,13 @@
+<ng-template rbPlaceholder></ng-template>
+
 <div class="row">
   <div class="col-xs-8">
-    <div class="alert alert-danger" *ngIf="error">
+
+    <!-- <rb-alert [message]="error" *ngIf="error"></rb-alert> -->
+
+    <!-- <div class="alert alert-danger" *ngIf="error">
       {{error}}
-    </div>
+    </div> -->
     <div *ngIf="isLoading">
       <rb-loading-spinner></rb-loading-spinner>
     </div>

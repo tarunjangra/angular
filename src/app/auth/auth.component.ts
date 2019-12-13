@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService, AuthResponseData } from './auth.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { AlertComponent } from '../shared/alert/alert.component';
+import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive'
 
 @Component({
   selector: 'rb-auth',
@@ -14,24 +16,32 @@ export class AuthComponent implements OnInit {
   loginMode: boolean = false;
   isLoading: boolean = false;
   error: string = null;
-  constructor(private authService: AuthService, private router: Router) { }
+  sub: Subscription;
+
+  @ViewChild(PlaceholderDirective, { static: false }) alertHost: PlaceholderDirective;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private componentFactoryResolver: ComponentFactoryResolver
+  ) { }
 
   ngOnInit() {
   }
 
-  onSwitchToLogin(){
+  onSwitchToLogin() {
     this.loginMode = !this.loginMode;
   }
 
-  onSubmit(form: NgForm){
-    if(!form.valid){
+  onSubmit(form: NgForm) {
+    if (!form.valid) {
       return;
     }
     let obs: Observable<AuthResponseData>;
-    if(this.loginMode){
+    if (this.loginMode) {
       this.isLoading = true;
       obs = this.authService.login(form.value.email, form.value.password);
-    }else{
+    } else {
       this.isLoading = true;
       obs = this.authService.signup(form.value.email, form.value.password);
     }
@@ -40,11 +50,27 @@ export class AuthComponent implements OnInit {
       this.isLoading = false;
       this.error = null;
       this.router.navigate(['/recipes']);
-    },(errorMessage) => {
+    }, (errorMessage) => {
       this.isLoading = false;
-      this.error = errorMessage;
+      // this.error = errorMessage;
+      this.showAlert(errorMessage);
     });
     form.reset();
+  }
+
+
+  private showAlert(message: string) {
+    const alertCFactor = this.componentFactoryResolver.resolveComponentFactory(
+      AlertComponent
+    );
+    const hostView = this.alertHost.viewContainerRef
+    hostView.clear();
+    const alertComponent = hostView.createComponent(alertCFactor);
+    alertComponent.instance.message = message;
+    this.sub = alertComponent.instance.close.subscribe(() => {
+      this.sub.unsubscribe();
+      hostView.clear();
+    });
   }
 
 }
