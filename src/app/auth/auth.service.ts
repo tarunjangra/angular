@@ -29,9 +29,7 @@ export class AuthService {
     }).pipe(
       catchError(this.handleError),
       tap((response: AuthResponseData) => {
-        const expirationDate = new Date(new Date().getTime() + (+response.expiresIn * 1000) );
-        const user: User = new User(response.email, response.localId, response.idToken, expirationDate);
-        this.user.next(user);
+        this.handleSignin(response.email,response.localId, response.idToken, +response.expiresIn);
       })
       );
   }
@@ -43,11 +41,15 @@ export class AuthService {
     }).pipe(
       catchError(this.handleError),
       tap((response: AuthResponseData) => {
-        const expirationDate = new Date(new Date().getTime() + (+response.expiresIn * 1000) );
-        const user: User = new User(response.email, response.localId, response.idToken, expirationDate);
-        this.user.next(user);
+        this.handleSignin(response.email,response.localId, response.idToken, +response.expiresIn);
       })
       );
+  }
+
+  private handleSignin(email: string, localId: string, idToken: string, expiresIn: number) {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000 );
+    const user: User = new User(email, localId, idToken, expirationDate);
+    this.user.next(user);
   }
 
   private handleError(errorRes: HttpErrorResponse){
