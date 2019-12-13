@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
 import {  User } from './user.model';
+import { Router } from '@angular/router';
 
 export interface AuthResponseData {
   idToken: string;// 	A Firebase Auth ID token for the newly created user.
@@ -20,7 +21,7 @@ export class AuthService {
 
   user: BehaviorSubject<User> = new BehaviorSubject(null);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   signup(email: string, password: string) {
     const API = 'AIzaSyBMfwZ3r4sYy-fdB1dLDPM_glQN7Mgg5ig';
@@ -70,5 +71,10 @@ export class AuthService {
         break;
     }
     return throwError(errorMessage);
+  }
+
+  logout (){
+    this.user.next(null);
+    this.router.navigate(['/auth']);
   }
 }
