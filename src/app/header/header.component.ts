@@ -1,14 +1,20 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { DataStorageService } from '../shared/data-storage.service';
+import { AuthService } from '../auth/auth.service';
+import { Subscription } from 'rxjs';
+import { User } from '../auth/user.model';
 
 
 @Component({
   selector: 'rb-header',
   templateUrl: './header.component.html'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
-  constructor(private dataStore: DataStorageService){}
+  userSubscription: Subscription;
+  isLoggedIn: boolean = false;
+
+  constructor(private dataStore: DataStorageService, private authService: AuthService){}
 
   public onSave(){
     this.dataStore.storeRecipes();
@@ -16,5 +22,13 @@ export class HeaderComponent {
 
   public onFetch(){
     this.dataStore.fetchRecipes().subscribe();
+  }
+
+  ngOnInit(): void {
+    this.userSubscription = this.authService.user.subscribe((user: User) => {
+      if(user.token){
+        this.isLoggedIn = true;
+      }
+    })
   }
 }
