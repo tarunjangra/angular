@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-
-
+import {FormsModule} from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { ShoppingListComponent } from '../shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from '../shopping-list/shopping-edit/shopping-edit.component';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
+
 
 @NgModule({
   declarations: [
@@ -16,8 +15,9 @@ import { ShoppingListService } from '../shopping-list/shopping-list.service';
   imports: [ 
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule
+    RouterModule.forChild([
+      { path: 'shopping-list', component: ShoppingListComponent }
+    ])
    ],
   exports: [],
   providers: [
