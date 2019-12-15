@@ -1,8 +1,7 @@
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 
 import { RecipesComponent } from './recipes.component';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
@@ -11,7 +10,7 @@ import { RecipeItemComponent } from './recipe-list/recipe-item/recipe-item.compo
 import { RecipeStartComponent } from './recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import {RecipesRoutesModule} from './recipes-routes.module';
-import { AuthInterceptorService } from '../auth/auth-interception.service';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -23,17 +22,12 @@ import { AuthInterceptorService } from '../auth/auth-interception.service';
     RecipeEditComponent,
   ],
   imports: [ 
-    CommonModule, 
     RecipesRoutesModule,
+    SharedModule,
     FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule
+    ReactiveFormsModule
   ],
   exports: [],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptorService,
-    multi: true
-  }],
+  providers: [],
 })
 export class RecipesModule {}
