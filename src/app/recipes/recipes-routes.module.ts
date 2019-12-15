@@ -10,7 +10,7 @@ import {AuthGarud} from '../auth/auth.garud';
 
 const routes: Routes = [
   {
-    path: 'recipes', component: RecipesComponent, canActivate: [AuthGarud], children: [
+    path: '', component: RecipesComponent, canActivate: [AuthGarud], children: [
       { path: '', component: RecipeStartComponent },
       { path: 'new', component: RecipeEditComponent },
       { path: ':id', component: RecipeDetailComponent, resolve: [RecipeResolverService] },

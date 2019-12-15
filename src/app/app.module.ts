@@ -9,7 +9,6 @@ import { AuthComponent } from './auth/auth.component';
 import { AppComponent } from './app.component';
 import { AppRouteModule } from './app-route.module';
 import { SharedModule } from './shared/shared.module';
-import {ShoppingListModule} from './shopping-list/shopping-list.module';
 import { CoreModule } from './core.module';
 
 @NgModule({
@@ -24,7 +23,6 @@ import { CoreModule } from './core.module';
     SharedModule,
     FormsModule,
     HttpClientModule,
-    ShoppingListModule,
     CoreModule
   ],
   bootstrap: [AppComponent]
