@@ -14,11 +14,7 @@ export class DataStorageService {
 
   storeRecipes() {
     const recipes = this.rs.getRecipies();
-    this.http.put<{ name: string }>('https://g-invoicing.firebaseio.com/recipes.json', recipes).subscribe(
-      (response) => {
-        console.log(response);
-      }
-    );
+    this.http.put<{ name: string }>('https://g-invoicing.firebaseio.com/recipes.json', recipes).subscribe();
   }
 
   fetchRecipes() {

@@ -8,7 +8,6 @@ export class ShoppingListService {
     new Ingredient('Tomotoes', 5),
   ];
 
-
   ingredientsChanged: EventEmitter<Ingredient[]> = new EventEmitter();
   selectedIngredientId: Subject<number> = new Subject();
 
