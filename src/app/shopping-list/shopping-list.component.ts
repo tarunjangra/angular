@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.scss']
 })
-export class ShoppingListComponent implements OnInit, OnDestroy {
+export class ShoppingListComponent implements OnInit {
 
   ingredients: Observable<{ ingredients: Ingredient[]}>;
   sub: Subscription;
@@ -30,7 +30,4 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.shoppingService.selectedIngredientId.next(id);
   }
   
-  ngOnDestroy(){
-  }
-
 }
